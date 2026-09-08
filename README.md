@@ -66,7 +66,6 @@ You do **not** need to touch React components or JSX files to update your person
     "timeZone": "GMT+8",
     "remotePreference": "Remote Worldwide",
     "email": "baratetajayson01@gmail.com",
-    "phone": "+63 977 243 9187",
     "bioShort": "Delivering scalable network automation...",
     "bioParagraphs": [
       "With 8+ years of hands-on professional development...",
@@ -91,7 +90,7 @@ You do **not** need to touch React components or JSX files to update your person
 
 | Section | Key | What It Controls |
 | :--- | :--- | :--- |
-| **Personal Info** | `personal` | Name, professional role, location, timezone, email, phone, and story paragraphs. |
+| **Personal Info** | `personal` | Name, professional role, location, timezone, email, and story paragraphs. |
 | **Social Links** | `socials` | GitHub URL, LinkedIn profile URL, and any connected profiles. |
 | **Hero & Metric Stats**| `stats` | Highlighting years of experience, device concurrency, and reduction metrics. |
 | **Projects Showcase** | `projects` | Array of projects with problem/solution breakdowns, technical tags, and preview links. |
@@ -190,6 +189,31 @@ bbdevops/
 ## 🚀 Deployment
 
 The compiled output is a completely static, single-page bundle that can be hosted anywhere:
+
+### Deploy to AWS S3 & CloudFront (Recommended for Enterprise)
+
+Deploy as a globally accelerated, secure Single Page Application using a **Private S3 Bucket**, **Origin Access Control (OAC)**, and **CloudFront Custom Error Responses**:
+
+```bash
+# 1. Compile production bundle
+npm run build
+
+# 2. Sync hashed assets with 1-year immutable cache
+aws s3 sync dist/assets s3://YOUR_BUCKET_NAME/assets \
+  --cache-control "max-age=31536000,public,immutable" --delete
+
+# 3. Sync HTML and meta files with no-cache
+aws s3 sync dist/ s3://YOUR_BUCKET_NAME \
+  --exclude "assets/*" \
+  --cache-control "no-cache,no-store,must-revalidate" --delete
+
+# 4. Invalidate edge cache
+aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
+```
+
+> 📖 **Full Guide & CI/CD**: Read the complete, step-by-step walkthrough with AWS Console steps, OAC security policy, and automated GitHub Actions workflow in [**docs/AWS_S3_CLOUDFRONT_GUIDE.md**](docs/AWS_S3_CLOUDFRONT_GUIDE.md).
+>
+> 🤖 **Automated CI/CD Workflow**: Included out of the box in [`.github/workflows/deploy-aws.yml`](.github/workflows/deploy-aws.yml).
 
 ### Deploy to Vercel
 ```bash
