@@ -1,0 +1,294 @@
+{
+  "personal": {
+    "name": "Jayson Barateta",
+    "title": "Python Developer · Automation Engineer · AI Solutions",
+    "role": "Python Developer & AI Automation",
+    "status": "Available for New Projects & Contracts",
+    "availabilityBadge": "Available for Hire",
+    "location": "Daraga, Albay, Philippines",
+    "timeZone": "GMT+8",
+    "remotePreference": "Remote Worldwide",
+    "email": "baratetajayson01@gmail.com",
+    "phone": "+63 977 243 9187",
+    "bioShort": "Delivering scalable network automation (Cisco/Fujitsu), agentic development workflows, and custom AI-powered software for international enterprise clients across Japan and Singapore.",
+    "bioParagraphs": [
+      "With 8+ years of hands-on professional development, I specialize in architecting custom Python platforms that empower network engineers, turning tedious multi-step manual operations into automated, verifiable software systems.",
+      "My technical expertise spans concurrent network verification across 100+ Cisco and Fujitsu devices simultaneously, multi-platform low-code orchestration (n8n, Make.com, Power Automate), and structured agentic development workflows that accelerate engineering velocity."
+    ]
+  },
+  "socials": {
+    "github": "https://github.com/Baratetz123456",
+    "linkedin": "https://www.linkedin.com/in/jayson-barateta-15a919164"
+  },
+  "stats": {
+    "yearsExperience": "8+",
+    "concurrentDevices": "100+",
+    "workloadReduction": "90%",
+    "teamTurnaround": "1 Week",
+    "internationalMarkets": "Japan & SG"
+  },
+  "projects": [
+    {
+      "id": "netlogdiff",
+      "title": "AI-Powered Network Configuration Verification",
+      "shortTitle": "NetLogDiff AI",
+      "category": "Network Automation",
+      "icon": "ArrowsLeftRight",
+      "tagline": "Automated pre/post configuration diffs and AI-generated analysis across Cisco and Fujitsu enterprise devices.",
+      "problem": "After configuration changes, network engineers manually inspect each affected area through the CLI and confirm changes device-by-device — a tedious, error-prone process.",
+      "solution": "Engineered a web-based network automation platform that collects device data, generates exact configuration diffs, and provides AI-generated analysis adding interpretive context across multiple network devices concurrently.",
+      "impact": "Network engineers significantly increased operational throughput and now handle complex multi-device changes with automated confidence.",
+      "tags": ["Python", "Streamlit", "Docker", "GPT / Gemini API", "Cisco & Fujitsu", "SQLite"],
+      "badge": "Enterprise Production",
+      "image": "/images/netlogdiff.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    },
+    {
+      "id": "agentic-team-workflow",
+      "title": "Agentic Workflow Adoption for Dev Teams",
+      "shortTitle": "Agentic Dev Workflow",
+      "category": "AI & Agentic",
+      "icon": "Lightning",
+      "tagline": "Standardized agentic engineering practice that turned around a stalled 6-developer team.",
+      "problem": "A team of 6 developers had spent 3 months with zero shipped features while exhausting 20,000 monthly AI credits mid-development without disciplined architecture.",
+      "solution": "Simulated the entire project in a single day using structured agentic workflows and disciplined software practices (reaching 70–80% completion), then codified the approach into a team standard and led hands-on training.",
+      "impact": "The team shipped its first feature within one week of training and accelerated all subsequent delivery cycles.",
+      "tags": ["Agentic Workflows", "GitHub Copilot", "AI Agents", "Python", "Tkinter", "Agile Scrum"],
+      "badge": "High Impact",
+      "image": "/images/agentic_team_workflow.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    },
+    {
+      "id": "agentic-rag-monitoring",
+      "title": "Agentic RAG for Network Device Monitoring",
+      "shortTitle": "Agentic RAG Monitor",
+      "category": "AI & Agentic",
+      "icon": "Cpu",
+      "tagline": "Autonomous RAG pipeline eliminating manual analysis of 5-minute telemetry chart reports.",
+      "problem": "An existing tool generated device-activity charts every 5 minutes and compiled them into Excel reports, requiring engineers to manually open and analyze charts to spot anomalies.",
+      "solution": "Built an agentic RAG workflow using LangChain and Pinecone vector store on top of existing telemetry that analyzes activity in real-time, alerts engineers via Microsoft Teams on high-severity issues, and creates Asana tickets automatically for minor anomalies.",
+      "impact": "Engineers eliminated manual chart review throughout the day, freeing substantial capacity for building infrastructure.",
+      "tags": ["Python", "n8n", "LangChain", "OpenAI", "Pinecone (Vector DB)", "Streamlit", "MS Teams", "Asana"],
+      "badge": "Autonomous RAG",
+      "image": "/images/agentic_rag_monitoring.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    },
+    {
+      "id": "security-compliance-ai",
+      "title": "AI Security Compliance & Reporting Workflow",
+      "shortTitle": "Security Compliance AI",
+      "category": "Enterprise Workflow",
+      "icon": "ShieldCheck",
+      "tagline": "Automated division-wide security compliance tracking and AI executive report synthesis.",
+      "problem": "Four team members handled security compliance reminders on top of core duties — tracking 50 division members monthly and manually converting company security emails into division reports.",
+      "solution": "Created an automated workflow with daily automated Microsoft Teams reminders until actions are completed, plus an AI pipeline that ingests security updates, analyzes policy impact, and regenerates tailored division reports.",
+      "impact": "Administrative workload dropped from 4 team members to 1, who now simply oversees and distributes the synthesized report.",
+      "tags": ["Microsoft SharePoint", "Power Automate", "Copilot", "Microsoft Teams", "Outlook", "Workflow Automation"],
+      "badge": "75% Overhead Cut",
+      "image": "/images/security_compliance_ai.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    },
+    {
+      "id": "flowboard-ai",
+      "title": "FlowBoard AI Automation Pipeline",
+      "shortTitle": "FlowBoard AI",
+      "category": "Enterprise Workflow",
+      "icon": "Robot",
+      "tagline": "AI-powered n8n system streamlining member onboarding/offboarding with compliance & consistency.",
+      "problem": "Manual onboarding and cross-system identity provisioning caused operational bottlenecks and audit risks.",
+      "solution": "Orchestrated end-to-end n8n workflows with webhook triggers, automated credential lifecycle hooks, and validation logging.",
+      "impact": "Standardized operational onboarding across multiple tools with audit-ready consistency.",
+      "tags": ["n8n", "AI Automation", "Webhooks", "Workflow Orchestration", "API Integration"],
+      "badge": "Automation",
+      "image": "/images/flowboard_ai.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    },
+    {
+      "id": "motorcycle-shop",
+      "title": "Motorcycle Shop Management System",
+      "shortTitle": "Shop ERP Platform",
+      "category": "Custom Software",
+      "icon": "Motorcycle",
+      "tagline": "Full-stack operations platform — POS, inventory, payroll calculation, sales tracking & dashboards.",
+      "problem": "Repair shop operations relied on fragmented paper records, spreadsheets, and manual sales reconciliations.",
+      "solution": "Developed a comprehensive management system featuring inventory tracking, automated point-of-sale, technician commission payroll, and analytical dashboards.",
+      "impact": "Provided owners real-time inventory visibility and eliminated end-of-month manual payroll errors.",
+      "tags": ["Python", "FastAPI", "PostgreSQL", "Docker", "AWS", "Mobile Compatible"],
+      "badge": "Mobile Compatible",
+      "image": "/images/motorcycle_shop.jpg",
+      "githubUrl": "https://github.com/Baratetz123456",
+      "liveUrl": "https://github.com/Baratetz123456"
+    }
+  ],
+  "services": [
+    {
+      "id": "ai-engineering",
+      "title": "AI & Agentic Engineering",
+      "tagline": "Custom AI agents, structured agentic workflows, and LLM-powered RAG solutions built for operational scale.",
+      "icon": "Robot",
+      "color": "#E07A5F",
+      "features": [
+        "Agentic Workflows & Multi-Agent Delivery",
+        "LLM API Integration (GPT & Gemini APIs)",
+        "RAG Pipelines (LangChain & Pinecone)",
+        "AI Analysis & Real-Time Summarization"
+      ]
+    },
+    {
+      "id": "network-automation",
+      "title": "Network Device Automation",
+      "tagline": "Automated verification, configuration diffing, and drift detection across enterprise Cisco and Fujitsu devices.",
+      "icon": "ShareNetwork",
+      "color": "#D4A373",
+      "features": [
+        "Concurrent Multi-Device Verification (100+ Devices)",
+        "Configuration Diffing & AI Context (NetLogDiff)",
+        "Ansible Playbooks & Configuration Management",
+        "Automated Incident Alerting via Teams & Asana"
+      ]
+    },
+    {
+      "id": "workflow-orchestration",
+      "title": "Workflow Orchestration & APIs",
+      "tagline": "Multi-platform workflow automation bridging disjointed enterprise systems and data pipelines.",
+      "icon": "Gear",
+      "color": "#E07A5F",
+      "features": [
+        "n8n, Make.com, & Zapier Orchestration",
+        "Microsoft Power Automate, SharePoint & Teams",
+        "Webhook & Native Platform REST APIs",
+        "Event-Driven Lifecycle & Compliance Workflows"
+      ]
+    },
+    {
+      "id": "python-dev",
+      "title": "Python & Systems Engineering",
+      "tagline": "8+ years of high-performing Python solutions, MVC desktop applications, and database optimization.",
+      "icon": "Code",
+      "color": "#D4A373",
+      "features": [
+        "MVC Architecture for CLI & Desktop Tools",
+        "Streamlit Web Applications & Docker Deployments",
+        "PostgreSQL, MySQL & SQLite Query Optimization",
+        "PEP 8 Standards & Comprehensive Testing"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "id": "fujitsu",
+      "role": "Application Systems Engineer / Consultant",
+      "company": "Fujitsu Philippines Inc.",
+      "location": "BGC, Taguig, Philippines",
+      "period": "September 2022 — Present",
+      "duration": "3+ Years",
+      "isCurrent": true,
+      "description": [
+        "Concurrent network automation: Engineered concurrent Python scripts and Ansible playbooks automating end-to-end device verification across 100+ Cisco devices simultaneously, reducing post-configuration manual workload by 90%.",
+        "User-centric tool design: Replaced a tedious manual verification process (jump servers, manual commands, file diffing) with an intuitive two-step tool workflow that automates data collection and instantly highlights configuration changes.",
+        "Desktop & CLI development: Architected robust CLI and desktop automation applications using the MVC design pattern, optimizing operational tools used by network engineers.",
+        "Workflow orchestration & APIs: Designed and deployed end-to-end integration workflows using n8n, Make.com, Zapier, and Microsoft Power Automate, leveraging webhooks and native platform APIs to bridge disjointed enterprise systems.",
+        "Global collaboration: Partnered directly with Japanese clients to translate complex business requirements into production-ready software under Agile Scrum and Waterfall frameworks.",
+        "Code quality: Enforced PEP 8 standards, regular self and team code reviews, and comprehensive end-to-end testing."
+      ],
+      "tags": ["Python", "Network Automation", "Ansible", "Cisco & Fujitsu", "n8n", "Power Automate", "MVC Pattern", "Agile"]
+    },
+    {
+      "id": "novasolutions-junior",
+      "role": "Junior Developer",
+      "company": "Nova Solutions Philippines Inc.",
+      "location": "Ortigas, Pasig, Philippines",
+      "period": "August 2020 — August 2022",
+      "duration": "2 Years",
+      "isCurrent": false,
+      "description": [
+        "Developed and maintained mission-critical Python automation scripts validating complex architectural data structures.",
+        "Contributed to R&D on geometric calculation algorithms and compliance checks for 3D building models.",
+        "Optimized complex SQL queries embedded in Python scripts processing 500k+ rows of architectural data, cutting rule execution runtime by 50%.",
+        "Investigated, replicated, and resolved high-priority bugs across legacy and modern codebases while championing readability and maintainability."
+      ],
+      "tags": ["Python", "PostgreSQL", "SQL Optimization", "Geometric Algorithms", "Data Validation"]
+    },
+    {
+      "id": "novasolutions-trainee",
+      "role": "Trainee Developer",
+      "company": "Nova Solutions Philippines Inc.",
+      "location": "Ortigas, Pasig, Philippines",
+      "period": "August 2018 — August 2020",
+      "duration": "2 Years",
+      "isCurrent": false,
+      "description": [
+        "Built Python and Lua scripts translating technical regulatory building codes into automated validation rules and executable logic.",
+        "Collaborated with professional Building Architects and Singapore Government SMEs to gather precise criteria for software-driven compliance checks.",
+        "Built foundational expertise in clean coding, debugging, and the SDLC within a highly regulated enterprise domain."
+      ],
+      "tags": ["Python", "Lua", "Regulatory Automation", "Singapore Govt SMEs", "SDLC"]
+    }
+  ],
+  "education": [
+    {
+      "id": "dwcl",
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "Divine Word College of Legazpi",
+      "period": "Graduated 2018",
+      "details": "Comprehensive computer science education emphasizing data structures, algorithms, object-oriented design, software engineering, and database management systems."
+    }
+  ],
+  "skills": [
+    {
+      "title": "AI & Agentic Engineering",
+      "icon": "Robot",
+      "color": "#E07A5F",
+      "items": [
+        "Agentic Workflows",
+        "Autonomous AI Agents",
+        "GitHub Copilot Adoption",
+        "LLM APIs (GPT & Gemini)",
+        "RAG Pipelines (LangChain & Pinecone)",
+        "AI Analysis & Real-Time Summarization"
+      ]
+    },
+    {
+      "title": "Network Automation & Infrastructure",
+      "icon": "ShareNetwork",
+      "color": "#D4A373",
+      "items": [
+        "Cisco IOS & Fujitsu Network Devices",
+        "Concurrent Automation (100+ Devices)",
+        "Ansible Playbooks",
+        "NetLogDiff & Configuration Diffing",
+        "Linux, WSL & Windows Environments"
+      ]
+    },
+    {
+      "title": "Workflow Orchestration & APIs",
+      "icon": "Gear",
+      "color": "#E07A5F",
+      "items": [
+        "n8n Orchestration",
+        "Microsoft Power Automate",
+        "Make.com & Zapier",
+        "Webhooks & REST APIs",
+        "Microsoft Teams & SharePoint Automations"
+      ]
+    },
+    {
+      "title": "Python & Systems Engineering",
+      "icon": "Code",
+      "color": "#D4A373",
+      "items": [
+        "Python (Primary, 8+ Years)",
+        "MVC Architecture for Desktop & CLI",
+        "Streamlit Web Applications",
+        "Docker Containerization",
+        "PostgreSQL (500k+ Rows Optimization)",
+        "PEP 8 Standards & Testing"
+      ]
+    }
+  ]
+}

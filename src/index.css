@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-page: #FAF3EA;
+    --bg-card: #FFF8F0;
+    --bg-card-hover: #FFF3E6;
+    --bg-sidebar: #F4ECE1;
+    --bg-badge: #F1E5D8;
+    --text-main: #3E2C23;
+    --text-muted: #7D6355;
+    --text-subtle: #A89083;
+    --accent-primary: #E07A5F;
+    --accent-primary-hover: #D0694E;
+    --accent-secondary: #D4A373;
+    --border-warm: #EBDDCD;
+    --border-warm-light: #F4EAE0;
+    --shadow-warm: 0 4px 20px -2px rgba(62, 44, 35, 0.07);
+    --shadow-warm-hover: 0 12px 30px -4px rgba(224, 122, 95, 0.16);
+  }
+
+  .dark {
+    --bg-page: #171210;
+    --bg-card: #231B17;
+    --bg-card-hover: #2B211D;
+    --bg-sidebar: #1E1714;
+    --bg-badge: #2F241F;
+    --text-main: #F7EFE8;
+    --text-muted: #BCAAA0;
+    --text-subtle: #857065;
+    --accent-primary: #E07A5F;
+    --accent-primary-hover: #EA896F;
+    --accent-secondary: #D4A373;
+    --border-warm: #362923;
+    --border-warm-light: #2D221D;
+    --shadow-warm: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+    --shadow-warm-hover: 0 12px 30px -4px rgba(224, 122, 95, 0.22);
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+    overflow-x: hidden;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-secondary);
+  border-radius: 9999px;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Card Hover micro-interaction */
+.card-warm {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 16px;
+  box-shadow: var(--shadow-warm);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-warm:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: var(--shadow-warm-hover);
+  border-color: rgba(224, 122, 95, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
