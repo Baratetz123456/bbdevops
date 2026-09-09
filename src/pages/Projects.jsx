@@ -21,7 +21,7 @@ export default function Projects() {
       : projectsData.filter((p) => p.category === activeCategory)
 
   return (
-    <PageTransition className="p-5 sm:p-8 lg:p-10 max-w-7xl mx-auto space-y-8">
+    <PageTransition className="p-4 sm:p-8 lg:p-10 max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="space-y-2">
         <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#E07A5F]">
@@ -69,7 +69,7 @@ export default function Projects() {
       </div>
 
       {/* Projects Grid: 3 columns desktop, 2 col tablet, 1 col mobile */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
         {filteredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}

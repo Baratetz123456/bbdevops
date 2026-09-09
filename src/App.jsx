@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext'
 import MainLayout from './layouts/MainLayout'
-import Home from './pages/Home'
-import Projects from './pages/Projects'
-import Services from './pages/Services'
-import EmploymentHistory from './pages/EmploymentHistory'
-import About from './pages/About'
-import Contact from './pages/Contact'
+import TimelineSkeleton from './components/TimelineSkeleton'
+import ProjectSkeleton from './components/ProjectSkeleton'
+import PageSkeleton from './components/PageSkeleton'
+
+// Route-level code splitting with lazy loading
+const Home = lazy(() => import('./pages/Home'))
+const Projects = lazy(() => import('./pages/Projects'))
+const Services = lazy(() => import('./pages/Services'))
+const EmploymentHistory = lazy(() => import('./pages/EmploymentHistory'))
+const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
 
 export default function App() {
   return (
@@ -15,12 +20,54 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainLayout />}>
-            <Route index element={<Home />} />
-            <Route path="projects" element={<Projects />} />
-            <Route path="services" element={<Services />} />
-            <Route path="history" element={<EmploymentHistory />} />
-            <Route path="about" element={<About />} />
-            <Route path="contact" element={<Contact />} />
+            <Route
+              index
+              element={
+                <Suspense fallback={<PageSkeleton />}>
+                  <Home />
+                </Suspense>
+              }
+            />
+            <Route
+              path="projects"
+              element={
+                <Suspense fallback={<ProjectSkeleton />}>
+                  <Projects />
+                </Suspense>
+              }
+            />
+            <Route
+              path="services"
+              element={
+                <Suspense fallback={<PageSkeleton />}>
+                  <Services />
+                </Suspense>
+              }
+            />
+            <Route
+              path="history"
+              element={
+                <Suspense fallback={<TimelineSkeleton />}>
+                  <EmploymentHistory />
+                </Suspense>
+              }
+            />
+            <Route
+              path="about"
+              element={
+                <Suspense fallback={<PageSkeleton />}>
+                  <About />
+                </Suspense>
+              }
+            />
+            <Route
+              path="contact"
+              element={
+                <Suspense fallback={<PageSkeleton />}>
+                  <Contact />
+                </Suspense>
+              }
+            />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

@@ -115,3 +115,39 @@
   animation: fadeIn 0.25s ease-out forwards;
 }
 
+/* Warm Shimmer Skeleton Animation */
+@keyframes shimmer-sweep {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-warm {
+  background: linear-gradient(
+    90deg,
+    var(--bg-badge) 0%,
+    rgba(224, 122, 95, 0.15) 35%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(224, 122, 95, 0.15) 65%,
+    var(--bg-badge) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.8s ease-in-out infinite;
+}
+
+.dark .skeleton-warm {
+  background: linear-gradient(
+    90deg,
+    var(--bg-badge) 0%,
+    rgba(224, 122, 95, 0.09) 35%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(224, 122, 95, 0.09) 65%,
+    var(--bg-badge) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 1.8s ease-in-out infinite;
+}
+

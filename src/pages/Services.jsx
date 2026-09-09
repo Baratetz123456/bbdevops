@@ -6,7 +6,7 @@ import { servicesData } from '../data/servicesData'
 
 export default function Services() {
   return (
-    <PageTransition className="p-5 sm:p-8 lg:p-10 max-w-6xl mx-auto space-y-8">
+    <PageTransition className="p-4 sm:p-8 lg:p-10 max-w-6xl mx-auto space-y-8">
       {/* Header */}
       <div className="space-y-2">
         <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#E07A5F]">
