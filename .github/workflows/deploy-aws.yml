@@ -1,4 +1,4 @@
-name: Deploy Portfolio to AWS S3 and CloudFront
+name: CD - Deploy to AWS S3 & CloudFront
 
 on:
   push:
@@ -6,13 +6,18 @@ on:
       - main
   workflow_dispatch:
 
+# Ensure only one production deployment runs at a time to prevent race conditions
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
-    name: Build & Deploy to AWS
+    name: Build & Deploy to Production
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -24,7 +29,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Run Linter
+      - name: Run Linter (Oxlint)
         run: npm run lint
 
       - name: Build Production Bundle
@@ -37,13 +42,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Sync Static Assets to S3 (Immutable Cache for /assets)
+      - name: Sync Static Assets to S3 (Immutable 1-Year Cache)
         run: |
           aws s3 sync dist/assets s3://${{ secrets.S3_BUCKET_NAME }}/assets \
             --cache-control "max-age=31536000,public,immutable" \
             --delete
 
-      - name: Sync Root Files to S3 (No-Cache for HTML/Meta)
+      - name: Sync Root Files to S3 (No-Cache for Entry Points)
         run: |
           aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
             --exclude "assets/*" \
@@ -55,3 +60,11 @@ jobs:
           aws cloudfront create-invalidation \
             --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
             --paths "/*"
+
+      - name: Deployment Summary
+        run: |
+          echo "### 🚀 Production Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target Bucket:** \`s3://${{ secrets.S3_BUCKET_NAME }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **CloudFront Distribution:** \`${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Region:** \`${{ secrets.AWS_REGION }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY

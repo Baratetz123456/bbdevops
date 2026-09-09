@@ -75,10 +75,13 @@ This guide provides a comprehensive, step-by-step walkthrough for deploying this
    - **Viewer protocol policy**: Select **Redirect HTTP to HTTPS**.
    - **Allowed HTTP methods**: Select **GET, HEAD**.
    - **Cache key and origin requests**: Select **Cache policy: CachingOptimized**.
-5. Configure **Settings**:
-   - **Price class**: Choose **Use all edge locations (best performance)** or **Use only North America and Europe** based on budget.
+7. Configure **Settings**:
+   - **Price class**: Choose **Use all edge locations (best performance)** (covered under CloudFront's 1 TB Always Free Tier).
+   - **Web Application Firewall (WAF)**: Select **"Do not enable security protections"**.
+     > [!IMPORTANT]
+     > Enabling AWS WAF incurs a mandatory **$5.00/month** fee plus per-request charges. Since your S3 bucket is 100% private via Origin Access Control (OAC) with all public access blocked, your static portfolio does not need WAF. Keep this disabled for a $0.00 bill!
    - **Default root object**: Enter **`index.html`**.
-6. Click **Create distribution**.
+8. Click **Create distribution**.
 
 ---
 
@@ -227,6 +230,28 @@ This repository includes an automated workflow at [`.github/workflows/deploy-aws
      - `CLOUDFRONT_DISTRIBUTION_ID`: Your CloudFront distribution ID (e.g., `E1234567890ABC`).
 
 Every git push to `main` will now automatically test, build, deploy, and invalidate your CloudFront edge cache!
+
+---
+
+### Step 7: Zero-Cost Custom Domain Setup (Avoid Route 53 $0.50/mo Fee)
+
+If you own a custom domain (e.g. `yourname.dev` or `portfolio.yourname.com`), you can attach it to CloudFront with **$0.00 DNS fees** without paying AWS Route 53's $0.50/month hosted zone fee:
+
+1. **Keep DNS at your Registrar or Cloudflare Free Tier**:
+   - Use Cloudflare (Free), Namecheap, Porkbun, or Google Domains/Squarespace.
+2. **Request a Free SSL Certificate in AWS Certificate Manager (ACM)**:
+   - Go to **ACM Console** in **`us-east-1` (N. Virginia)** *(CloudFront requires ACM certificates to be in `us-east-1`)*.
+   - Click **Request a public certificate** for your domain (e.g., `portfolio.yourdomain.com`).
+   - Validate via DNS by adding the provided `CNAME` record to your free DNS provider.
+3. **Attach Custom Domain to CloudFront**:
+   - In your CloudFront Distribution settings, click **Edit**.
+   - Under **Alternate domain names (CNAME)**, add `portfolio.yourdomain.com`.
+   - Under **Custom SSL certificate**, select your validated ACM certificate.
+4. **Point Free DNS to CloudFront**:
+   - In your free DNS provider, create a `CNAME` record:
+     - **Host**: `portfolio` (or `@` if using Cloudflare CNAME flattening)
+     - **Value / Target**: `YOUR_DISTRIBUTION_ID.cloudfront.net`
+     - **TTL**: Auto / 1 Hour
 
 ---
 

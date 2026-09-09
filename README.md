@@ -145,6 +145,8 @@ Theme preference is persisted across browser sessions in both `localStorage.getI
 ```text
 bbdevops/
 ├── .agents/                    # Multi-agent orchestrator policies & role specifications
+├── .github/workflows/          # Automated CI & CD GitHub Actions pipelines
+├── docs/                       # Architecture & CI/CD deployment guides
 ├── public/
 │   ├── favicon.svg             # Application favicon
 │   ├── images/                 # Static media assets (profile, project previews)
@@ -186,51 +188,24 @@ bbdevops/
 
 ---
 
-## 🚀 Deployment
+## 🚀 CI/CD & Zero-Cost Deployment
 
-The compiled output is a completely static, single-page bundle that can be hosted anywhere:
+This application features an automated, enterprise-grade Continuous Integration and Deployment pipeline powered by **GitHub Actions**, **Amazon S3** (private origin with OAC), and **Amazon CloudFront** (global CDN with SPA client-side routing).
 
-### Deploy to AWS S3 & CloudFront (Recommended for Enterprise)
+### 💰 Little-to-No-Cost Guarantee
+- **AWS Free Tier (Year 1)**: **$0.00 / month** (1 TB CloudFront data transfer, 10M requests, 1,000 invalidations, 5 GB S3).
+- **Post-Free Tier (Year 2+)**: **< $0.02 / month** (bundle storage is ~1.5 MB; CloudFront transfer & requests remain Always Free).
+- **Free Custom DNS**: Uses free external DNS (Cloudflare / Namecheap CNAME) to avoid Route 53's $0.50/mo fee.
 
-Deploy as a globally accelerated, secure Single Page Application using a **Private S3 Bucket**, **Origin Access Control (OAC)**, and **CloudFront Custom Error Responses**:
+| Pipeline | Trigger | Purpose |
+| :--- | :--- | :--- |
+| **[CI Validation](.github/workflows/ci.yml)** | Pull Requests & Feature Branches | Automated Oxlint and Vite production build validation before merging. |
+| **[CD Production Deploy](.github/workflows/deploy-aws.yml)** | Push to `main` or Manual Dispatch | Automated build, dual-tier S3 cache sync, and CloudFront edge cache invalidation. |
 
-```bash
-# 1. Compile production bundle
-npm run build
+### Dedicated Documentation
 
-# 2. Sync hashed assets with 1-year immutable cache
-aws s3 sync dist/assets s3://YOUR_BUCKET_NAME/assets \
-  --cache-control "max-age=31536000,public,immutable" --delete
-
-# 3. Sync HTML and meta files with no-cache
-aws s3 sync dist/ s3://YOUR_BUCKET_NAME \
-  --exclude "assets/*" \
-  --cache-control "no-cache,no-store,must-revalidate" --delete
-
-# 4. Invalidate edge cache
-aws cloudfront create-invalidation --distribution-id YOUR_DIST_ID --paths "/*"
-```
-
-> 📖 **Full Guide & CI/CD**: Read the complete, step-by-step walkthrough with AWS Console steps, OAC security policy, and automated GitHub Actions workflow in [**docs/AWS_S3_CLOUDFRONT_GUIDE.md**](docs/AWS_S3_CLOUDFRONT_GUIDE.md).
->
-> 🤖 **Automated CI/CD Workflow**: Included out of the box in [`.github/workflows/deploy-aws.yml`](.github/workflows/deploy-aws.yml).
-
-### Deploy to Vercel
-```bash
-npm install -g vercel
-vercel
-```
-
-### Deploy to Netlify
-```bash
-npm run build
-# Publish directory: dist
-```
-Add a `public/_redirects` file with `/*  /index.html  200` to support client-side routing on hard refresh.
-
-### Deploy to GitHub Pages
-1. In `vite.config.js`, set `base: '/<repository-name>/'` if deploying to a subpath.
-2. Build via `npm run build` and publish the `dist` folder via `gh-pages`.
+- 📖 **[CI/CD Deployment & Cost Guide](docs/CICD_DEPLOYMENT_GUIDE.md)**: Complete step-by-step documentation for GitHub Secrets configuration, least-privilege AWS IAM policies, two-tier cache headers, zero-spend budget alerts, S3 lifecycle auto-purge, and rollback runbooks.
+- ☁️ **[AWS S3 + CloudFront Infrastructure Guide](docs/AWS_S3_CLOUDFRONT_GUIDE.md)**: Step-by-step console guide for private S3 bucket provisioning, Origin Access Control (OAC), free custom domain setup, and CloudFront Custom Error Responses.
 
 ---
 
