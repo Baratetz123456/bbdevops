@@ -43,28 +43,42 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Sync Static Assets to S3 (Immutable 1-Year Cache)
+        env:
+          S3_BUCKET_RAW: ${{ secrets.S3_BUCKET_NAME }}
         run: |
-          aws s3 sync dist/assets s3://${{ secrets.S3_BUCKET_NAME }}/assets \
+          S3_BUCKET=$(echo "$S3_BUCKET_RAW" | tr -d '[:space:]')
+          aws s3 sync dist/assets "s3://${S3_BUCKET}/assets" \
             --cache-control "max-age=31536000,public,immutable" \
             --delete
 
       - name: Sync Root Files to S3 (No-Cache for Entry Points)
+        env:
+          S3_BUCKET_RAW: ${{ secrets.S3_BUCKET_NAME }}
         run: |
-          aws s3 sync dist/ s3://${{ secrets.S3_BUCKET_NAME }} \
+          S3_BUCKET=$(echo "$S3_BUCKET_RAW" | tr -d '[:space:]')
+          aws s3 sync dist/ "s3://${S3_BUCKET}" \
             --exclude "assets/*" \
             --cache-control "no-cache,no-store,must-revalidate" \
             --delete
 
       - name: Invalidate CloudFront Cache
+        env:
+          CF_DIST_RAW: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
+          CF_DIST_ID=$(echo "$CF_DIST_RAW" | tr -d '[:space:]')
           aws cloudfront create-invalidation \
-            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --distribution-id "$CF_DIST_ID" \
             --paths "/*"
 
       - name: Deployment Summary
+        env:
+          S3_BUCKET_RAW: ${{ secrets.S3_BUCKET_NAME }}
+          CF_DIST_RAW: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
         run: |
+          S3_BUCKET=$(echo "$S3_BUCKET_RAW" | tr -d '[:space:]')
+          CF_DIST_ID=$(echo "$CF_DIST_RAW" | tr -d '[:space:]')
           echo "### 🚀 Production Deployment Successful!" >> $GITHUB_STEP_SUMMARY
-          echo "- **Target Bucket:** \`s3://${{ secrets.S3_BUCKET_NAME }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **CloudFront Distribution:** \`${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target Bucket:** \`s3://${S3_BUCKET}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **CloudFront Distribution:** \`${CF_DIST_ID}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Region:** \`${{ secrets.AWS_REGION }}\`" >> $GITHUB_STEP_SUMMARY
           echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY

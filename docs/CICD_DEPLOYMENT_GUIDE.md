@@ -409,6 +409,21 @@ Set up automated guardrails so AWS sends you an immediate email alert if your pr
   - Error Code: `404` -> Response Page: `/index.html` -> HTTP Response: `200`
   - Refer to [AWS_S3_CLOUDFRONT_GUIDE.md](AWS_S3_CLOUDFRONT_GUIDE.md) for step-by-step console instructions.
 
+### 4. `ParamValidation: Unknown options: /assets (Exit Code 252)`
+- **Symptom**:
+  ```text
+  Run aws s3 sync dist/assets s3://*** /assets \
+  aws: [ERROR]: An error occurred (ParamValidation): Unknown options: /assets
+  Error: Process completed with exit code 252.
+  ```
+- **Root Cause**: An accidental **trailing space or newline** was included in the `S3_BUCKET_NAME` secret when pasted into GitHub (e.g. `my-bucket ` instead of `my-bucket`). Notice the space in `s3://*** /assets`. AWS CLI interpreted `/assets` as a separate, unknown CLI parameter.
+- **Fix in GitHub Secrets**:
+  1. Go to **Settings → Secrets and variables → Actions**.
+  2. Click the pencil icon ✏️ next to `S3_BUCKET_NAME`.
+  3. Re-type or paste your bucket name making sure there are **no leading or trailing spaces** or line breaks.
+  4. Click **Update secret**.
+- **Automated Code Fix**: The pipeline in `.github/workflows/deploy-aws.yml` has been hardened with `tr -d '[:space:]'` to automatically sanitize whitespace from secrets at runtime.
+
 ---
 
 ## 🔗 Related Documentation
