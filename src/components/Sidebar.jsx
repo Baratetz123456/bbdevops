@@ -204,6 +204,16 @@ export default function Sidebar() {
             <Envelope size={20} weight="fill" />
           </NavLink>
         </div>
+
+        <div className="text-center pt-1">
+          <Link
+            to="/privacy"
+            className="text-[11px] hover:underline hover:text-[#E07A5F] transition-colors"
+            style={{ color: 'var(--text-muted)' }}
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
     </aside>
   )

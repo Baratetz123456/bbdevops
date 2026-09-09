@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Envelope,
   PaperPlaneRight,
@@ -17,31 +18,103 @@ export default function Contact() {
     name: '',
     email: '',
     message: '',
+    _gotcha: '',
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [showToast, setShowToast] = useState(false)
+  const [toastState, setToastState] = useState({
+    show: false,
+    message: '',
+    type: 'success',
+  })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsSubmitting(true)
+    if (isSubmitting) return
 
-    // Simulate submission
-    setTimeout(() => {
+    // Honeypot anti-spam check
+    if (formData._gotcha) {
       setIsSubmitting(false)
-      setShowToast(true)
-      setFormData({ name: '', email: '', message: '' })
+      setFormData({ name: '', email: '', message: '', _gotcha: '' })
+      setToastState({
+        show: true,
+        message: 'Thank you! Your message has been received.',
+        type: 'success',
+      })
+      return
+    }
 
-      // Trigger celebratory confetti
-      confetti({
-        particleCount: 50,
-        spread: 60,
-        origin: { y: 0.8 },
-        colors: ['#E07A5F', '#D4A373', '#FAF3EA'],
+    setIsSubmitting(true)
+    const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL
+
+    if (!contactApiUrl) {
+      // Fallback if API is not deployed yet: trigger direct mailto link
+      const subject = encodeURIComponent(`Project Inquiry from ${formData.name}`)
+      const body = encodeURIComponent(
+        `${formData.message}\n\n---\nSender: ${formData.name}\nEmail: ${formData.email}`
+      )
+      window.location.href = `mailto:${portfolio.personal.email}?subject=${subject}&body=${body}`
+      setIsSubmitting(false)
+      setToastState({
+        show: true,
+        message: `Opening your email client to message ${portfolio.personal.email} directly.`,
+        type: 'success',
+      })
+      setTimeout(() => setToastState((prev) => ({ ...prev, show: false })), 6000)
+      return
+    }
+
+    try {
+      const response = await fetch(contactApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _gotcha: formData._gotcha,
+        }),
       })
 
-      // Hide toast automatically after 5 seconds
-      setTimeout(() => setShowToast(false), 5000)
-    }, 400)
+      const data = await response.json().catch(() => ({}))
+
+      if (response.ok && data.success) {
+        setFormData({ name: '', email: '', message: '', _gotcha: '' })
+        setToastState({
+          show: true,
+          message: 'Thank you! Your message has been sent directly to Jayson.',
+          type: 'success',
+        })
+
+        // Celebratory confetti
+        confetti({
+          particleCount: 50,
+          spread: 60,
+          origin: { y: 0.8 },
+          colors: ['#E07A5F', '#D4A373', '#FAF3EA'],
+        })
+      } else {
+        const errorMsg =
+          data.error ||
+          `Unable to deliver message. Please reach out directly to ${portfolio.personal.email}`
+        setToastState({
+          show: true,
+          message: errorMsg,
+          type: 'error',
+        })
+      }
+    } catch (err) {
+      console.error('Contact submission error:', err)
+      setToastState({
+        show: true,
+        message: `Network error. Please email ${portfolio.personal.email} directly.`,
+        type: 'error',
+      })
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setToastState((prev) => ({ ...prev, show: false })), 6000)
+    }
   }
 
   const handleChange = (e) => {
@@ -143,10 +216,22 @@ export default function Contact() {
               />
             </div>
 
+            {/* Honeypot field for spam prevention (hidden from human users) */}
+            <input
+              type="text"
+              name="_gotcha"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData._gotcha}
+              onChange={handleChange}
+              className="hidden"
+              aria-hidden="true"
+            />
+
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm text-white shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 px-6 rounded-xl font-semibold text-sm text-white shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
               style={{
                 backgroundColor: 'var(--accent-primary)',
                 boxShadow: '0 8px 24px -4px rgba(224, 122, 95, 0.4)',
@@ -161,6 +246,15 @@ export default function Contact() {
                 </>
               )}
             </button>
+
+            {/* Privacy Policy Consent Notice */}
+            <p className="text-[11px] text-center pt-2 leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+              By submitting, you agree to our{' '}
+              <Link to="/privacy" className="underline hover:text-[#E07A5F] transition-colors">
+                Privacy Policy
+              </Link>
+              . Your details are kept strictly confidential.
+            </p>
           </form>
         </div>
 
@@ -254,9 +348,10 @@ export default function Contact() {
       </div>
 
       <Toast
-        show={showToast}
-        message="Thank you! Your message has been sent successfully."
-        onClose={() => setShowToast(false)}
+        show={toastState.show}
+        message={toastState.message}
+        type={toastState.type}
+        onClose={() => setToastState((prev) => ({ ...prev, show: false }))}
       />
     </PageTransition>
   )

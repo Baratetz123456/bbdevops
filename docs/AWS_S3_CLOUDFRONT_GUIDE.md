@@ -235,23 +235,27 @@ Every git push to `main` will now automatically test, build, deploy, and invalid
 
 ### Step 7: Zero-Cost Custom Domain Setup (Avoid Route 53 $0.50/mo Fee)
 
-If you own a custom domain (e.g. `yourname.dev` or `portfolio.yourname.com`), you can attach it to CloudFront with **$0.00 DNS fees** without paying AWS Route 53's $0.50/month hosted zone fee:
+If you own a custom domain (such as **`bbdevops.dev`**), you can attach it to CloudFront with **$0.00 DNS fees** without paying AWS Route 53's $0.50/month hosted zone fee.
 
+> 📖 **Complete Walkthrough for `bbdevops.dev`**: For an exhaustive, click-by-click manual covering how to buy `bbdevops.dev` on Cloudflare at wholesale cost and link it to CloudFront, read the dedicated guide: [**docs/CLOUDFLARE_DOMAIN_CLOUDFRONT_GUIDE.md**](CLOUDFLARE_DOMAIN_CLOUDFRONT_GUIDE.md).
+
+Quick summary of steps:
 1. **Keep DNS at your Registrar or Cloudflare Free Tier**:
    - Use Cloudflare (Free), Namecheap, Porkbun, or Google Domains/Squarespace.
 2. **Request a Free SSL Certificate in AWS Certificate Manager (ACM)**:
    - Go to **ACM Console** in **`us-east-1` (N. Virginia)** *(CloudFront requires ACM certificates to be in `us-east-1`)*.
-   - Click **Request a public certificate** for your domain (e.g., `portfolio.yourdomain.com`).
+   - Click **Request a public certificate** for your domain (e.g., `bbdevops.dev` and `*.bbdevops.dev`).
    - Validate via DNS by adding the provided `CNAME` record to your free DNS provider.
 3. **Attach Custom Domain to CloudFront**:
    - In your CloudFront Distribution settings, click **Edit**.
-   - Under **Alternate domain names (CNAME)**, add `portfolio.yourdomain.com`.
+   - Under **Alternate domain names (CNAME)**, add `bbdevops.dev` and `www.bbdevops.dev`.
    - Under **Custom SSL certificate**, select your validated ACM certificate.
 4. **Point Free DNS to CloudFront**:
    - In your free DNS provider, create a `CNAME` record:
-     - **Host**: `portfolio` (or `@` if using Cloudflare CNAME flattening)
+     - **Host**: `@` (Cloudflare CNAME flattening) or `www`
      - **Value / Target**: `YOUR_DISTRIBUTION_ID.cloudfront.net`
      - **TTL**: Auto / 1 Hour
+     - **Proxy Status**: DNS Only (Grey Cloud)
 
 ---
 

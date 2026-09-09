@@ -1,8 +1,10 @@
 import React from 'react'
-import { CheckCircle, X } from '@phosphor-icons/react'
+import { CheckCircle, WarningCircle, X } from '@phosphor-icons/react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-export default function Toast({ show, message, onClose }) {
+export default function Toast({ show, message, onClose, type = 'success' }) {
+  const isError = type === 'error'
+
   return (
     <AnimatePresence>
       {show && (
@@ -11,18 +13,28 @@ export default function Toast({ show, message, onClose }) {
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="fixed bottom-20 md:bottom-8 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-2xl shadow-xl border"
+          className="fixed bottom-20 md:bottom-8 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-2xl shadow-xl border max-w-md"
           style={{
             backgroundColor: 'var(--bg-card)',
-            borderColor: 'var(--accent-primary)',
+            borderColor: isError ? '#E63946' : 'var(--accent-primary)',
             color: 'var(--text-main)',
           }}
         >
-          <div className="w-8 h-8 rounded-full flex items-center justify-center bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 shrink-0">
-            <CheckCircle size={20} weight="fill" />
+          <div
+            className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+              isError
+                ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400'
+                : 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400'
+            }`}
+          >
+            {isError ? (
+              <WarningCircle size={20} weight="fill" />
+            ) : (
+              <CheckCircle size={20} weight="fill" />
+            )}
           </div>
           <div className="text-sm font-medium pr-2">
-            {message || 'Message sent successfully! Thank you for reaching out.'}
+            {message || (isError ? 'An error occurred. Please try again.' : 'Message sent successfully!')}
           </div>
           <button
             onClick={onClose}
@@ -37,3 +49,4 @@ export default function Toast({ show, message, onClose }) {
     </AnimatePresence>
   )
 }
+

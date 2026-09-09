@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:api": "python infrastructure/test_local.py"
   },
   "dependencies": {
     "@lottiefiles/dotlottie-react": "^0.19.16",

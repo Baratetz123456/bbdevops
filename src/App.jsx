@@ -13,6 +13,7 @@ const Services = lazy(() => import('./pages/Services'))
 const EmploymentHistory = lazy(() => import('./pages/EmploymentHistory'))
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
+const PrivacyPolicy = lazy(() => import('./pages/LegalNotice'))
 
 export default function App() {
   return (
@@ -65,6 +66,14 @@ export default function App() {
               element={
                 <Suspense fallback={<PageSkeleton />}>
                   <Contact />
+                </Suspense>
+              }
+            />
+            <Route
+              path="privacy"
+              element={
+                <Suspense fallback={<PageSkeleton />}>
+                  <PrivacyPolicy />
                 </Suspense>
               }
             />

@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    watch: {
+      ignored: ['**/infrastructure/**', '**/*.py', '**/__pycache__/**', '**/*.zip'],
+    },
+  },
 })

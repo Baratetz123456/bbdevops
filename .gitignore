@@ -69,3 +69,22 @@ ehthumbs.db
 Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+.pytest_cache/
+*.egg-info/
+venv/
+.venv/
+env/
+ENV/
+
+# Serverless Deployment Archives & Scratch Files
+infrastructure/lambda/lambda_function.zip
+*.zip
+test.py
+scratch/
+
