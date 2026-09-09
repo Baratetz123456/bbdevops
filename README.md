@@ -71,7 +71,7 @@ You do **not** need to touch React components or JSX files to update your person
     "location": "Daraga, Albay, Philippines",
     "timeZone": "GMT+8",
     "remotePreference": "Remote Worldwide",
-    "email": "baratetajayson01@gmail.com",
+    "email": "baratetajayson.work@gmail.com",
     "bioShort": "Delivering scalable network automation...",
     "bioParagraphs": [
       "With 8+ years of hands-on professional development...",

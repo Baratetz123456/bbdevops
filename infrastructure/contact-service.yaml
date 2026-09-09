@@ -4,11 +4,11 @@ Description: 'BBDevOps Portfolio - Serverless Contact Form Backend (API Gateway 
 Parameters:
   RecipientEmail:
     Type: String
-    Default: 'baratetajayson01@gmail.com'
+    Default: 'baratetajayson.work@gmail.com'
     Description: 'The email address that receives contact form submissions.'
   SenderEmail:
     Type: String
-    Default: 'baratetajayson01@gmail.com'
+    Default: 'baratetajayson.work@gmail.com'
     Description: 'The verified SES sender email address.'
 
 Resources:
@@ -65,8 +65,8 @@ Resources:
           import boto3
           from botocore.exceptions import ClientError
 
-          RECIPIENT_EMAIL = os.environ.get("RECIPIENT_EMAIL", "baratetajayson01@gmail.com")
-          SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "baratetajayson01@gmail.com")
+          RECIPIENT_EMAIL = os.environ.get("RECIPIENT_EMAIL", "baratetajayson.work@gmail.com")
+          SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "baratetajayson.work@gmail.com")
           AWS_REGION = os.environ.get("AWS_REGION", "ap-southeast-1")
 
           ses_client = boto3.client("ses", region_name=AWS_REGION)

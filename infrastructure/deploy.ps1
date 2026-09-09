@@ -2,7 +2,7 @@
 param (
     [string]$StackName = "bbdevops-contact-api",
     [string]$Region = "ap-southeast-1",
-    [string]$RecipientEmail = "baratetajayson01@gmail.com"
+    [string]$RecipientEmail = "baratetajayson.work@gmail.com"
 )
 
 Write-Host "==========================================================" -ForegroundColor Cyan

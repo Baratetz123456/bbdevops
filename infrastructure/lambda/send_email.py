@@ -12,8 +12,8 @@ import boto3
 from botocore.exceptions import ClientError
 
 # Configuration via Environment Variables
-RECIPIENT_EMAIL = os.environ.get("RECIPIENT_EMAIL", "baratetajayson01@gmail.com")
-SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "baratetajayson01@gmail.com")
+RECIPIENT_EMAIL = os.environ.get("RECIPIENT_EMAIL", "baratetajayson.work@gmail.com")
+SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "baratetajayson.work@gmail.com")
 AWS_REGION = os.environ.get("AWS_REGION", "ap-southeast-1")
 
 ses_client = boto3.client("ses", region_name=AWS_REGION)

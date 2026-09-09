@@ -3,7 +3,7 @@ set -e
 
 STACK_NAME="bbdevops-contact-api"
 REGION="ap-southeast-1"
-RECIPIENT_EMAIL="baratetajayson01@gmail.com"
+RECIPIENT_EMAIL="baratetajayson.work@gmail.com"
 
 echo "=========================================================="
 echo " Deploying BBDevOps Serverless Contact API to AWS"

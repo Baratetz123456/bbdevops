@@ -50,7 +50,7 @@ If `VITE_CONTACT_API_URL` is **not set** in your `.env.local`:
    - **Project Details**: `Inquiring about CI/CD pipeline automation.`
 3. Click **Send Message**.
 4. **Expected Result**:
-   - A friendly notification toast appears: *"Opening your email client to message baratetajayson01@gmail.com directly."*
+   - A friendly notification toast appears: *"Opening your email client to message baratetajayson.work@gmail.com directly."*
    - Your system's default email client (Outlook, Apple Mail, etc.) launches automatically with the recipient, subject, and message pre-populated.
 
 ---
@@ -67,7 +67,7 @@ When you have deployed the AWS CloudFormation stack (see [docs/AWS_CONTACT_API_G
    - Button shows `Sending message...` state.
    - On success: Multi-colored confetti bursts on screen! 🎉
    - Success toast appears: *"Thank you! Your message has been sent directly to Jayson's inbox."*
-   - An email arrives in your `baratetajayson01@gmail.com` Gmail inbox within seconds, with `Reply-To` set directly to the visitor's email address.
+   - An email arrives in your `baratetajayson.work@gmail.com` Gmail inbox within seconds, with `Reply-To` set directly to the visitor's email address.
 
 ---
 
