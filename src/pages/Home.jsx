@@ -142,60 +142,69 @@ export default function Home() {
       </div>
 
       {/* Small Stat Row (3 verified stats) */}
-      <div className="grid grid-cols-3 gap-3 sm:gap-4 pb-2">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pb-2">
         <div
-          className="card-warm p-3 sm:p-4 rounded-xl flex items-center gap-3 transition-transform hover:scale-102"
+          className="card-warm p-3.5 sm:p-4 rounded-xl flex items-center gap-3.5 transition-transform duration-200 hover:scale-[1.02]"
         >
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[#E07A5F]"
+            className="w-11 h-11 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 text-[#E07A5F]"
             style={{ backgroundColor: 'rgba(224, 122, 95, 0.12)' }}
           >
-            <Briefcase size={20} weight="fill" />
+            <Briefcase size={22} weight="fill" />
           </div>
-          <div className="min-w-0">
-            <div className="font-bold text-base sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
+          <div className="min-w-0 flex-1">
+            <div className="font-bold text-lg sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
               {portfolio.stats.yearsExperience}
             </div>
-            <div className="text-[11px] sm:text-xs truncate font-medium mt-1" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-semibold leading-tight mt-1" style={{ color: 'var(--text-main)' }}>
               Years Experience
             </div>
+            <div className="text-[11px] leading-tight font-normal mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              Network &amp; AI Systems
+            </div>
           </div>
         </div>
 
         <div
-          className="card-warm p-3 sm:p-4 rounded-xl flex items-center gap-3 transition-transform hover:scale-102"
+          className="card-warm p-3.5 sm:p-4 rounded-xl flex items-center gap-3.5 transition-transform duration-200 hover:scale-[1.02]"
         >
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[#D4A373]"
+            className="w-11 h-11 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 text-[#D4A373]"
             style={{ backgroundColor: 'rgba(212, 163, 115, 0.15)' }}
           >
-            <Lightning size={20} weight="fill" />
+            <Lightning size={22} weight="fill" />
           </div>
-          <div className="min-w-0">
-            <div className="font-bold text-base sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
+          <div className="min-w-0 flex-1">
+            <div className="font-bold text-lg sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
               {portfolio.stats.concurrentDevices}
             </div>
-            <div className="text-[11px] sm:text-xs truncate font-medium mt-1" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-semibold leading-tight mt-1" style={{ color: 'var(--text-main)' }}>
               Concurrent Devices
+            </div>
+            <div className="text-[11px] leading-tight font-normal mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              Cisco &amp; Fujitsu Fleet
             </div>
           </div>
         </div>
 
         <div
-          className="card-warm p-3 sm:p-4 rounded-xl flex items-center gap-3 transition-transform hover:scale-102"
+          className="card-warm p-3.5 sm:p-4 rounded-xl flex items-center gap-3.5 transition-transform duration-200 hover:scale-[1.02]"
         >
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-[#E07A5F]"
+            className="w-11 h-11 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center shrink-0 text-[#E07A5F]"
             style={{ backgroundColor: 'rgba(224, 122, 95, 0.12)' }}
           >
-            <CheckCircle size={20} weight="fill" />
+            <CheckCircle size={22} weight="fill" />
           </div>
-          <div className="min-w-0">
-            <div className="font-bold text-base sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
+          <div className="min-w-0 flex-1">
+            <div className="font-bold text-lg sm:text-xl lg:text-2xl leading-none" style={{ color: 'var(--text-main)' }}>
               {portfolio.stats.workloadReduction}
             </div>
-            <div className="text-[11px] sm:text-xs truncate font-medium mt-1" style={{ color: 'var(--text-muted)' }}>
+            <div className="text-xs font-semibold leading-tight mt-1" style={{ color: 'var(--text-main)' }}>
               Manual Workload Cut
+            </div>
+            <div className="text-[11px] leading-tight font-normal mt-0.5" style={{ color: 'var(--text-muted)' }}>
+              Pipeline &amp; Task Gains
             </div>
           </div>
         </div>
