@@ -14,9 +14,9 @@ from botocore.exceptions import ClientError
 # Configuration via Environment Variables
 RECIPIENT_EMAIL = os.environ.get("RECIPIENT_EMAIL", "baratetajayson.work@gmail.com")
 SENDER_EMAIL = os.environ.get("SENDER_EMAIL", "baratetajayson.work@gmail.com")
-AWS_REGION = os.environ.get("AWS_REGION", "ap-southeast-1")
+SES_REGION = os.environ.get("SES_REGION") or os.environ.get("AWS_REGION", "ap-southeast-1")
 
-ses_client = boto3.client("ses", region_name=AWS_REGION)
+ses_client = boto3.client("ses", region_name=SES_REGION)
 
 CORS_HEADERS = {
     "Access-Control-Allow-Origin": "*",
