@@ -33,6 +33,8 @@ jobs:
         run: npm run lint
 
       - name: Build Production Bundle
+        env:
+          VITE_CONTACT_API_URL: ${{ secrets.VITE_CONTACT_API_URL }}
         run: npm run build
 
       - name: Configure AWS Credentials
