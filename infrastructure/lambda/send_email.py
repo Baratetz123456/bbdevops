@@ -8,6 +8,7 @@ import json
 import os
 import re
 import html
+import datetime
 import boto3
 from botocore.exceptions import ClientError
 
@@ -55,10 +56,8 @@ def lambda_handler(event, context):
     except Exception as e:
         return build_response(400, {"error": "Invalid JSON payload", "details": str(e)})
 
-    # Anti-Spam Honeypot Check
-    # If the hidden '_gotcha' field is populated, a bot filled it.
+    # Anti-Spam Honeypot Check (Silently drop bots without spending SES quota)
     if data.get("_gotcha"):
-        # Silently return success to waste bot operator time
         return build_response(200, {"message": "Message sent successfully"})
 
     # Extract and sanitize fields
@@ -66,70 +65,117 @@ def lambda_handler(event, context):
     email = str(data.get("email", "")).strip()
     message = html.escape(str(data.get("message", "")).strip())
 
-    # Validation
+    # Security & Payload Constraints
     if not name or len(name) < 2 or len(name) > 100:
-        return build_response(400, {"error": "A valid name is required (2-100 characters)."})
+        return build_response(400, {"error": "Name must be between 2 and 100 characters."})
 
-    if not email or not is_valid_email(email):
+    if not email or not is_valid_email(email) or len(email) > 254:
         return build_response(400, {"error": "A valid email address is required."})
 
-    if not message or len(message) < 5 or len(message) > 5000:
-        return build_response(400, {"error": "Message must be between 5 and 5,000 characters long."})
+    if not message or len(message) < 5 or len(message) > 3000:
+        return build_response(400, {"error": "Message must be between 5 and 3,000 characters."})
 
-    # Build Email Content
-    subject = f"🚀 New Contact Form Inquiry from {name} (BBDevOps)"
+    timestamp_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    subject = f"🚀 New Inquiry: {name} (BBDevOps Portfolio)"
 
-    text_body = f"""New Contact Form Submission:
-----------------------------------
+    text_body = f"""======================================================
+NEW PORTFOLIO INQUIRY - BBDevOps
+======================================================
 From: {name}
 Email: {email}
+Timestamp: {timestamp_utc}
 
-Message:
+------------------------------------------------------
+MESSAGE:
+------------------------------------------------------
 {message}
-----------------------------------
-Sent from bbdevops.dev portfolio
+
+------------------------------------------------------
+Direct Reply: mailto:{email}?subject=Re:%20Portfolio%20Inquiry%20-%20BBDevOps
+Security: Honeypot passed (clean human) • HTML sanitized
+Route: API Gateway (HTTP v2) -> AWS Lambda (Python 3.12) -> Amazon SES
+======================================================
 """
 
-    html_body = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8">
-        <style>
-            body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #FAF3EA; margin: 0; padding: 20px; }}
-            .card {{ background-color: #ffffff; border-radius: 16px; padding: 28px; max-width: 600px; margin: 0 auto; border: 1px solid #EBDDCD; box-shadow: 0 4px 20px rgba(62, 44, 35, 0.08); }}
-            .header {{ border-bottom: 2px solid #E07A5F; padding-bottom: 16px; margin-bottom: 20px; }}
-            .badge {{ display: inline-block; background-color: rgba(224, 122, 95, 0.15); color: #E07A5F; font-weight: 700; font-size: 11px; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px; margin-bottom: 8px; }}
-            h2 {{ color: #3E2C23; margin: 0 0 4px 0; font-size: 20px; }}
-            .meta-item {{ margin: 8px 0; font-size: 14px; color: #7D6355; }}
-            .meta-item strong {{ color: #3E2C23; }}
-            .message-box {{ background-color: #FBF6EF; border-left: 4px solid #E07A5F; padding: 16px; border-radius: 8px; margin-top: 16px; font-size: 14px; line-height: 1.6; color: #3E2C23; white-space: pre-wrap; }}
-            .footer {{ margin-top: 24px; font-size: 12px; color: #A89083; text-align: center; }}
-        </style>
-    </head>
-    <body>
-        <div class="card">
-            <div class="header">
-                <span class="badge">Portfolio Inquiry</span>
-                <h2>New Message from {name}</h2>
-                <div class="meta-item"><strong>Sender Email:</strong> <a href="mailto:{email}">{email}</a></div>
+    html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>New Inquiry</title>
+</head>
+<body style="margin:0; padding:24px 12px; background-color:#F5EFEB; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#2D2825;">
+  <div style="max-width:600px; margin:0 auto; background:#FFFFFF; border-radius:16px; overflow:hidden; box-shadow:0 8px 30px rgba(74, 55, 40, 0.08); border:1px solid #EBDDCD;">
+    
+    <!-- Terracotta Brand Header -->
+    <div style="background:linear-gradient(135deg, #E07A5F 0%, #D4A373 100%); padding:28px 24px; text-align:left;">
+      <span style="display:inline-block; font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#FFFFFF; background:rgba(0,0,0,0.18); padding:4px 10px; border-radius:999px; margin-bottom:12px;">
+        BBDevOps • Portfolio Inquiry
+      </span>
+      <h1 style="margin:0; color:#FFFFFF; font-size:22px; font-weight:700; line-height:1.3;">
+        New Client Message Received
+      </h1>
+      <p style="margin:6px 0 0; color:rgba(255,255,255,0.92); font-size:13px;">
+        Submitted via bbdevops.dev contact form
+      </p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding:28px 24px;">
+
+      <!-- Sender Info Card -->
+      <table style="width:100%; border-collapse:collapse; background:#FAF3EA; border:1px solid #EBDDCD; border-radius:12px; margin-bottom:24px;">
+        <tr>
+          <td style="padding:16px 20px;">
+            <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#9E7154; margin-bottom:4px;">
+              Sender Details
             </div>
-            <div>
-                <strong>Message:</strong>
-                <div class="message-box">{message}</div>
+            <div style="font-size:16px; font-weight:700; color:#2D2825; margin-bottom:4px;">
+              {name}
             </div>
-            <div class="footer">
-                Delivered via AWS Serverless Contact API • BBDevOps Portfolio
+            <div style="font-size:14px; color:#E07A5F;">
+              <a href="mailto:{email}" style="color:#E07A5F; text-decoration:none; font-weight:500;">
+                {email}
+              </a>
             </div>
+          </td>
+          <td style="padding:16px 20px; text-align:right; vertical-align:middle;">
+            <a href="mailto:{email}?subject=Re:%20Portfolio%20Inquiry%20-%20BBDevOps" 
+               style="display:inline-block; background:#E07A5F; color:#FFFFFF; text-decoration:none; font-size:13px; font-weight:600; padding:10px 18px; border-radius:8px;">
+              ✉ Reply
+            </a>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Message Section -->
+      <div style="margin-bottom:24px;">
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#9E7154; margin-bottom:8px;">
+          Project Details / Message
         </div>
-    </body>
-    </html>
-    """
+        <div style="background:#FFFFFF; border-left:4px solid #E07A5F; border-top:1px solid #EBDDCD; border-right:1px solid #EBDDCD; border-bottom:1px solid #EBDDCD; border-radius:0 10px 10px 0; padding:18px 20px; font-size:14px; line-height:1.65; color:#3D3530; white-space:pre-wrap; word-break:break-word;">
+{message}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Technical Audit & Diagnostics Footer -->
+    <div style="background:#FAF3EA; border-top:1px solid #EBDDCD; padding:16px 24px; font-size:11px; color:#8C7769; line-height:1.6;">
+      <strong>Security Audit:</strong> Honeypot passed (clean human) • HTML sanitized<br>
+      <strong>Route:</strong> API Gateway (HTTP v2) → AWS Lambda (Python 3.12) → Amazon SES<br>
+      <strong>Timestamp:</strong> {timestamp_utc}
+    </div>
+
+  </div>
+</body>
+</html>
+"""
 
     # Send via Amazon SES
     try:
+        sender_formatted = f"BBDevOps Portfolio <{SENDER_EMAIL}>"
         response = ses_client.send_email(
-            Source=SENDER_EMAIL,
+            Source=sender_formatted,
             Destination={"ToAddresses": [RECIPIENT_EMAIL]},
             Message={
                 "Subject": {"Data": subject, "Charset": "UTF-8"},
@@ -157,7 +203,7 @@ Sent from bbdevops.dev portfolio
 
         # Helpful diagnosis for SES Sandbox restriction
         if "MessageRejected" in error_code or "not verified" in error_msg.lower():
-            hint = f"Make sure '{RECIPIENT_EMAIL}' is verified in the AWS SES Console in region '{AWS_REGION}'."
+            hint = f"Make sure '{RECIPIENT_EMAIL}' is verified in the AWS SES Console in region '{SES_REGION}'."
             return build_response(500, {"error": "SES Identity Error", "details": error_msg, "hint": hint})
 
         return build_response(500, {"error": "Failed to send email via SES", "code": error_code, "details": error_msg})
