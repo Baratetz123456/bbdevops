@@ -76,7 +76,7 @@ def lambda_handler(event, context):
         return build_response(400, {"error": "Message must be between 5 and 3,000 characters."})
 
     timestamp_utc = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
-    subject = f"🚀 New Inquiry: {name} (BBDevOps Portfolio)"
+    subject = f"[BBDevOps] New Inquiry from {name}"
 
     text_body = f"""======================================================
 NEW PORTFOLIO INQUIRY - BBDevOps
@@ -141,7 +141,7 @@ Route: API Gateway (HTTP v2) -> AWS Lambda (Python 3.12) -> Amazon SES
           <td style="padding:16px 20px; text-align:right; vertical-align:middle;">
             <a href="mailto:{email}?subject=Re:%20Portfolio%20Inquiry%20-%20BBDevOps" 
                style="display:inline-block; background:#E07A5F; color:#FFFFFF; text-decoration:none; font-size:13px; font-weight:600; padding:10px 18px; border-radius:8px;">
-              ✉ Reply
+              Reply
             </a>
           </td>
         </tr>
