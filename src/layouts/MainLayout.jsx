@@ -8,6 +8,13 @@ import MobileTopBar from '../components/MobileTopBar'
 export default function MainLayout() {
   const location = useLocation()
   const isHome = location.pathname === '/'
+  const mainRef = React.useRef(null)
+
+  React.useLayoutEffect(() => {
+    if (mainRef.current) {
+      mainRef.current.scrollTop = 0
+    }
+  }, [location.pathname])
 
   return (
     <div
@@ -22,6 +29,7 @@ export default function MainLayout() {
 
       {/* Main Content Area */}
       <main
+        ref={mainRef}
         className={`flex-1 md:ml-64 flex flex-col transition-all duration-300 ${
           isHome
             ? 'h-[calc(100vh-60px)] md:h-screen md:overflow-hidden pb-16 md:pb-0'

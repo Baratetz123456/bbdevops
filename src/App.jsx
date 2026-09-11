@@ -5,6 +5,7 @@ import MainLayout from './layouts/MainLayout'
 import TimelineSkeleton from './components/TimelineSkeleton'
 import ProjectSkeleton from './components/ProjectSkeleton'
 import PageSkeleton from './components/PageSkeleton'
+import ScrollToTop from './components/ScrollToTop'
 
 // Route-level code splitting with lazy loading
 const Home = lazy(() => import('./pages/Home'))
@@ -19,6 +20,7 @@ export default function App() {
   return (
     <ThemeProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<MainLayout />}>
             <Route
