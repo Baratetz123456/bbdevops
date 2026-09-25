@@ -68,7 +68,7 @@ You do **not** need to touch React components or JSX files to update your person
     "role": "Python Developer & AI Automation",
     "status": "Available for New Projects & Contracts",
     "availabilityBadge": "Available for Hire",
-    "location": "Daraga, Albay, Philippines",
+    "location": "Albay, Philippines",
     "timeZone": "GMT+8",
     "remotePreference": "Remote Worldwide",
     "email": "baratetajayson.work@gmail.com",

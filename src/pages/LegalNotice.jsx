@@ -144,7 +144,7 @@ export default function PrivacyPolicy() {
                           {portfolio.personal.name}
                         </div>
                         <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                          DevOps Engineer & AI Automation Specialist • {portfolio.personal.location}
+                          {portfolio.personal.title} • {portfolio.personal.location}
                         </div>
                       </div>
                       <a
